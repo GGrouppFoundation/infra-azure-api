@@ -3,24 +3,23 @@ using System.Net.Http;
 
 namespace GGroupp.Platform;
 
-using IAzureUserApiConfigurationProvider = IFunc<AzureUserApiConfiguration>;
 using IAzureUserMeGetFunc = IAsyncValueFunc<AzureUserMeGetIn, Result<AzureUserGetOut, Failure<AzureUserGetFailureCode>>>;
 
 internal sealed partial class AzureUserMeGetFunc : IAzureUserMeGetFunc
 {
-    public static AzureUserMeGetFunc Create(HttpMessageHandler httpMessageHandler, IAzureUserApiConfigurationProvider configurationProvider)
+    public static AzureUserMeGetFunc Create(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration configuration)
         =>
         new(
             httpMessageHandler ?? throw new ArgumentNullException(nameof(httpMessageHandler)),
-            configurationProvider ?? throw new ArgumentNullException(nameof(configurationProvider)));
+            configuration ?? throw new ArgumentNullException(nameof(configuration)));
 
     private readonly HttpMessageHandler httpMessageHandler;
 
-    private readonly IAzureUserApiConfigurationProvider configurationProvider;
+    private readonly AzureUserApiConfiguration configuration;
 
-    private AzureUserMeGetFunc(HttpMessageHandler httpMessageHandler, IAzureUserApiConfigurationProvider configurationProvider)
+    private AzureUserMeGetFunc(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration configuration)
     {
         this.httpMessageHandler = httpMessageHandler;
-        this.configurationProvider = configurationProvider;
+        this.configuration = configuration;
     }
 }
