@@ -4,14 +4,13 @@ using PrimeFuncPack;
 
 namespace GGroupp.Platform;
 
-using IAzureUserApiConfigurationProvider = IFunc<AzureUserApiConfiguration>;
 using IAzureUserMeGetFunc = IAsyncValueFunc<AzureUserMeGetIn, Result<AzureUserGetOut, Failure<AzureUserGetFailureCode>>>;
 
 public static class AzureUserGetFuncDependency
 {
     public static Dependency<IAzureUserMeGetFunc> UseAzureUserMeGetApi<THttpMessageHandler>(
         this Dependency<THttpMessageHandler> dependency,
-        Func<IServiceProvider, IAzureUserApiConfigurationProvider> configurationResolver)
+        Func<IServiceProvider, AzureUserApiConfiguration> configurationResolver)
         where THttpMessageHandler : HttpMessageHandler
         =>
         InnerUseAzureUserMeGetApi(
@@ -20,9 +19,9 @@ public static class AzureUserGetFuncDependency
 
     private static Dependency<IAzureUserMeGetFunc> InnerUseAzureUserMeGetApi<THttpMessageHandler>(
         Dependency<THttpMessageHandler> dependency,
-        Func<IServiceProvider, IAzureUserApiConfigurationProvider> configurationResolver)
+        Func<IServiceProvider, AzureUserApiConfiguration> configurationResolver)
         where THttpMessageHandler : HttpMessageHandler
         =>
         dependency.With(configurationResolver).Fold<IAzureUserMeGetFunc>(
-            (handler, configurationProvider) => AzureUserMeGetFunc.Create(handler, configurationProvider));
+            (handler, configuration) => AzureUserMeGetFunc.Create(handler, configuration));
 }
