@@ -17,11 +17,17 @@ public static class AzureUserGetFuncDependency
             dependency ?? throw new ArgumentNullException(nameof(dependency)),
             configurationResolver ?? throw new ArgumentNullException(nameof(configurationResolver)));
 
+    public static Dependency<IAzureUserMeGetFunc> UseAzureUserMeGetApi(
+        this Dependency<HttpMessageHandler> dependency)
+        =>
+        InnerUseAzureUserMeGetApi(
+            dependency ?? throw new ArgumentNullException(nameof(dependency)));
+
     private static Dependency<IAzureUserMeGetFunc> InnerUseAzureUserMeGetApi<THttpMessageHandler>(
         Dependency<THttpMessageHandler> dependency,
-        Func<IServiceProvider, AzureUserApiConfiguration> configurationResolver)
+        Func<IServiceProvider, AzureUserApiConfiguration>? configurationResolver = null)
         where THttpMessageHandler : HttpMessageHandler
         =>
-        dependency.With(configurationResolver).Fold<IAzureUserMeGetFunc>(
-            (handler, configuration) => AzureUserMeGetFunc.Create(handler, configuration));
+        dependency.Map<IAzureUserMeGetFunc>(
+            (sp, handler) => AzureUserMeGetFunc.Create(handler, configurationResolver?.Invoke(sp)));
 }

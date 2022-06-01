@@ -7,19 +7,18 @@ using IAzureUserMeGetFunc = IAsyncValueFunc<AzureUserMeGetIn, Result<AzureUserGe
 
 internal sealed partial class AzureUserMeGetFunc : IAzureUserMeGetFunc
 {
-    public static AzureUserMeGetFunc Create(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration configuration)
+    public static AzureUserMeGetFunc Create(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration? configuration = null)
         =>
         new(
-            httpMessageHandler ?? throw new ArgumentNullException(nameof(httpMessageHandler)),
-            configuration ?? throw new ArgumentNullException(nameof(configuration)));
+            httpMessageHandler ?? throw new ArgumentNullException(nameof(httpMessageHandler)), configuration);
 
     private readonly HttpMessageHandler httpMessageHandler;
 
-    private readonly AzureUserApiConfiguration configuration;
+    private readonly Uri graphApiBaseAddress;
 
-    private AzureUserMeGetFunc(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration configuration)
+    private AzureUserMeGetFunc(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration? configuration = null)
     {
         this.httpMessageHandler = httpMessageHandler;
-        this.configuration = configuration;
+        graphApiBaseAddress = configuration?.GraphApiBaseAddress ?? new("https://graph.microsoft.com/");
     }
 }

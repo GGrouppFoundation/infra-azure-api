@@ -21,7 +21,7 @@ partial class AzureUserMeGetFunc
     {
         using var httpClient = new HttpClient(httpMessageHandler, disposeHandler: false)
         {
-            BaseAddress = configuration.GraphApiBaseAddress
+            BaseAddress = graphApiBaseAddress
         };
         httpClient.DefaultRequestHeaders.Authorization = new("Bearer", new(input.AccessToken));
 
