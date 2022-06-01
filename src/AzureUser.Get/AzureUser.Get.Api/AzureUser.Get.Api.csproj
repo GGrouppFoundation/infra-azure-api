@@ -8,7 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>GGroupp.Platform</RootNamespace>
     <AssemblyName>GGroupp.Platform.Azure.AzureUser.Get.Api</AssemblyName>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +16,7 @@
     <PackageReference Include="PrimeFuncPack.Core.Failure" Version="2.0.0" />
     <PackageReference Include="PrimeFuncPack.Core.Func.Abstractions.AsyncValue" Version="2.0.0" />
     <PackageReference Include="PrimeFuncPack.Core.Result" Version="2.0.0" />
-    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.0.0" />
+    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
