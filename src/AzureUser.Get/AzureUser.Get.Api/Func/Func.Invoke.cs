@@ -5,24 +5,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using static System.FormattableString;
 
-namespace GGroupp.Platform;
+namespace GGroupp.Infra;
 
 partial class AzureUserMeGetFunc
 {
-    public ValueTask<Result<AzureUserGetOut, Failure<AzureUserGetFailureCode>>> InvokeAsync(
-        AzureUserMeGetIn input, CancellationToken cancellationToken = default)
-        =>
-        cancellationToken.IsCancellationRequested is false
-        ? InnerInvokeAsync(input, cancellationToken)
-        : ValueTask.FromCanceled<Result<AzureUserGetOut, Failure<AzureUserGetFailureCode>>>(cancellationToken);
+    public ValueTask<Result<AzureUserGetOut, Failure<Unit>>> InvokeAsync(AzureUserMeGetIn input, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(input);
 
-    private async ValueTask<Result<AzureUserGetOut, Failure<AzureUserGetFailureCode>>> InnerInvokeAsync(
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return ValueTask.FromCanceled<Result<AzureUserGetOut, Failure<Unit>>>(cancellationToken);
+        }
+
+        return InnerInvokeAsync(input, cancellationToken);
+    }
+
+    private async ValueTask<Result<AzureUserGetOut, Failure<Unit>>> InnerInvokeAsync(
         AzureUserMeGetIn input, CancellationToken cancellationToken)
     {
         using var httpClient = new HttpClient(httpMessageHandler, disposeHandler: false)
         {
             BaseAddress = graphApiBaseAddress
         };
+
         httpClient.DefaultRequestHeaders.Authorization = new("Bearer", new(input.AccessToken));
 
         var response = await httpClient.GetAsync(ApiNames.MeRelativeUrl, cancellationToken).ConfigureAwait(false);
@@ -31,10 +37,11 @@ partial class AzureUserMeGetFunc
         if (response.IsSuccessStatusCode is false)
         {
             var failureMessage = Invariant($"User data request finished with an unexpected error: {response.StatusCode} {json}");
-            return Failure.Create(AzureUserGetFailureCode.Unknown, failureMessage);
+            return Failure.Create(failureMessage);
         }
 
         var userJson = JsonSerializer.Deserialize<UserJsonGetOut>(json);
+
         return new AzureUserGetOut(
             id: userJson.Id,
             mail: userJson.Mail,

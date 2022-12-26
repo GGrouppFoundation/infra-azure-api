@@ -1,24 +1,20 @@
 using System;
 using System.Net.Http;
 
-namespace GGroupp.Platform;
-
-using IAzureUserMeGetFunc = IAsyncValueFunc<AzureUserMeGetIn, Result<AzureUserGetOut, Failure<AzureUserGetFailureCode>>>;
+namespace GGroupp.Infra;
 
 internal sealed partial class AzureUserMeGetFunc : IAzureUserMeGetFunc
 {
-    public static AzureUserMeGetFunc Create(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration? configuration = null)
+    public static AzureUserMeGetFunc Create(HttpMessageHandler httpMessageHandler)
         =>
         new(
-            httpMessageHandler ?? throw new ArgumentNullException(nameof(httpMessageHandler)), configuration);
+            httpMessageHandler ?? throw new ArgumentNullException(nameof(httpMessageHandler)));
 
     private readonly HttpMessageHandler httpMessageHandler;
 
-    private readonly Uri graphApiBaseAddress;
+    private readonly Uri graphApiBaseAddress = new("https://graph.microsoft.com/");
 
-    private AzureUserMeGetFunc(HttpMessageHandler httpMessageHandler, AzureUserApiConfiguration? configuration = null)
-    {
+    private AzureUserMeGetFunc(HttpMessageHandler httpMessageHandler)
+        =>
         this.httpMessageHandler = httpMessageHandler;
-        graphApiBaseAddress = configuration?.GraphApiBaseAddress ?? new("https://graph.microsoft.com/");
-    }
 }
