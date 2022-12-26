@@ -1,12 +1,10 @@
-namespace GGroupp.Platform;
+namespace GGroupp.Infra;
 
-public readonly record struct AzureUserMeGetIn
+public sealed record class AzureUserMeGetIn
 {
-    private readonly string? accessToken;
-
     public AzureUserMeGetIn(string accessToken)
         =>
-        this.accessToken = string.IsNullOrEmpty(accessToken) ? default : accessToken;
+        AccessToken = accessToken ?? string.Empty;
 
-    public string AccessToken => accessToken ?? string.Empty;
+    public string AccessToken { get; }
 }

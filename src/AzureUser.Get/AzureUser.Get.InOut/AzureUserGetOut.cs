@@ -1,25 +1,20 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace GGroupp.Platform;
+namespace GGroupp.Infra;
 
-public readonly record struct AzureUserGetOut
+public sealed record class AzureUserGetOut
 {
-    private readonly string? mail, displayName;
-
-    public AzureUserGetOut(
-        Guid id,
-        [AllowNull] string mail,
-        [AllowNull] string displayName)
+    public AzureUserGetOut(Guid id, [AllowNull] string mail, [AllowNull] string displayName)
     {
         Id = id;
-        this.mail = string.IsNullOrEmpty(mail) ? default : mail;
-        this.displayName = string.IsNullOrEmpty(displayName) ? default : displayName;
+        Mail = mail ?? string.Empty;
+        DisplayName = displayName ?? string.Empty;
     }
 
     public Guid Id { get; }
 
-    public string Mail => mail ?? string.Empty;
+    public string Mail { get; }
 
-    public string DisplayName => displayName ?? string.Empty;
+    public string DisplayName { get; }
 }
