@@ -1,7 +1,8 @@
 # infra-azure-services-api
 
-# Geolocation API:
-# appsettings.json example:
+## Geolocation API:
+### appsettings.json example:
+```
 {
     "Azure.Geolocation": {
       "ClientId": "aa7ef185-eda5-4d69-8265-f6ffc1a75b89",
@@ -12,10 +13,13 @@
       }
     }
 }
+```
 
-# Dependency example:
+### Dependency example:
+```
 private static Dependency<IGeolocationGetFunc> UseGeolocationGetFunc()
     =>
     PrimaryHandler.UseStandardSocketsHttpHandler()
     .UseLogging("GeolocationGetFunc")
     .UseGeolocationGetFunc();
+```
