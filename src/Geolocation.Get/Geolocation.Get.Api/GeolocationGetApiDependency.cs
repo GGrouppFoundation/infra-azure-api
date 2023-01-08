@@ -16,7 +16,7 @@ public static class GeolocationGetApiDependency
     public static Dependency<IGeolocationGetFunc> UseGeolocationGetFunc(
         this Dependency<HttpMessageHandler, GeolocationApiOption> dependency)
     {
-        _ = dependency ?? throw new ArgumentNullException(nameof(dependency));
+        ArgumentNullException.ThrowIfNull(dependency);
 
         return dependency.Fold<IGeolocationGetFunc>(CreateFunc);
     }
@@ -24,8 +24,8 @@ public static class GeolocationGetApiDependency
     public static Dependency<IGeolocationGetFunc> UseGeolocationGetFunc(
         this Dependency<HttpMessageHandler> dependency, Func<IServiceProvider, GeolocationApiOption> optionResolver)
     {
-        _ = dependency ?? throw new ArgumentNullException(nameof(dependency));
-        _ = optionResolver ?? throw new ArgumentNullException(nameof(optionResolver));
+        ArgumentNullException.ThrowIfNull(dependency);
+        ArgumentNullException.ThrowIfNull(optionResolver);
 
         return dependency.With(optionResolver).Fold<IGeolocationGetFunc>(CreateFunc);
     }
@@ -33,7 +33,7 @@ public static class GeolocationGetApiDependency
     public static Dependency<IGeolocationGetFunc> UseGeolocationGetFunc(
         this Dependency<HttpMessageHandler> dependency, [AllowNull] string sectionName = DefaultSectionName)
     {
-        _ = dependency ?? throw new ArgumentNullException(nameof(dependency));
+        ArgumentNullException.ThrowIfNull(dependency);
 
         return dependency.With(ResolveOption).Fold<IGeolocationGetFunc>(CreateFunc);
 
