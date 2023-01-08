@@ -12,7 +12,7 @@ partial class AuthTokenGetFunc
     {
         ArgumentNullException.ThrowIfNull(credential);
 
-        var token = await GetClientApplication(credential).AcquireTokenForClient(Scopes).ExecuteAsync(default).ConfigureAwait(false);
+        var token = await GetClientApplication(credential).AcquireTokenForClient(Scopes).ExecuteAsync(cancellationToken).ConfigureAwait(false);
         return new(token.TokenType, token.AccessToken);
     }
 }
