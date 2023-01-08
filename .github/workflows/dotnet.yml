@@ -51,6 +51,36 @@ jobs:
     - name: Pack AzureUser.Get.Api.csproj
       run: dotnet pack ./src/*/*/AzureUser.Get.Api.csproj --no-restore -o ~/nuget  -c Release
 
+    # Geolocation.Get.InOut.csproj
+
+    - name: Restore Geolocation.Get.InOut.csproj
+      run: dotnet restore ./src/*/*/Geolocation.Get.InOut.csproj
+
+    - name: Build Geolocation.Get.InOut.csproj
+      run: dotnet build ./src/*/*/Geolocation.Get.InOut.csproj --no-restore  -c Release
+
+    - name: Pack Geolocation.Get.InOut.csproj
+      run: dotnet pack ./src/*/*/Geolocation.Get.InOut.csproj --no-restore -o ~/nuget  -c Release
+
+    # Geolocation.Get.Api.csproj
+
+    - name: Restore Geolocation.Get.Api.csproj
+      run: dotnet restore ./src/*/*/Geolocation.Get.Api.csproj
+
+    - name: Build Geolocation.Get.Api.csproj
+      run: dotnet build ./src/*/*/Geolocation.Get.Api.csproj --no-restore  -c Release
+
+    - name: Pack Geolocation.Get.Api.csproj
+      run: dotnet pack ./src/*/*/Geolocation.Get.Api.csproj --no-restore -o ~/nuget  -c Release
+
+    # Geolocation.Get.Tests
+
+    - name: Restore Geolocation.Get.Tests
+      run: dotnet restore ./src/*/*/Geolocation.Get.Tests.csproj
+
+    - name: Test Geolocation.Get.Tests
+      run: dotnet test ./src/*/*/Geolocation.Get.Tests.csproj --no-restore  -c Release
+
     # Push
 
     - name: Push Packages
