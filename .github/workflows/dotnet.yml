@@ -21,65 +21,76 @@ jobs:
     - name: Add Local Nuget Source
       run: dotnet nuget add source ~/nuget
 
-    - name: Add GGroupp NuGet Source
+    - name: Add GarageGroup NuGet Source
       run: >
         dotnet nuget add source ${{ secrets.GG_NUGET_SOURCE_URL }}
-        -n ggroupp
+        -n garage
         -u ${{ secrets.GG_NUGET_SOURCE_USER_NAME }}
         -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
         --store-password-in-clear-text
 
-    # AzureUser.Get.InOut.csproj
+    # AzureUser.Api.Contract.UserGet.csproj
 
-    - name: Restore AzureUser.Get.InOut.csproj
-      run: dotnet restore ./src/*/*/AzureUser.Get.InOut.csproj
+    - name: Restore AzureUser.Api.Contract.UserGet.csproj
+      run: dotnet restore ./src/*/*/AzureUser.Api.Contract.UserGet.csproj
 
-    - name: Build AzureUser.Get.InOut.csproj
-      run: dotnet build ./src/*/*/AzureUser.Get.InOut.csproj --no-restore  -c Release
+    - name: Build AzureUser.Api.Contract.UserGet.csproj
+      run: dotnet build ./src/*/*/AzureUser.Api.Contract.UserGet.csproj --no-restore  -c Release
 
-    - name: Pack AzureUser.Get.InOut.csproj
-      run: dotnet pack ./src/*/*/AzureUser.Get.InOut.csproj --no-restore -o ~/nuget  -c Release
+    - name: Pack AzureUser.Api.Contract.UserGet.csproj
+      run: dotnet pack ./src/*/*/AzureUser.Api.Contract.UserGet.csproj --no-restore -o ~/nuget  -c Release
 
-    # AzureUser.Get.Api.csproj
+    # AzureUser.Api.Contract.csproj
 
-    - name: Restore AzureUser.Get.Api.csproj
-      run: dotnet restore ./src/*/*/AzureUser.Get.Api.csproj
+    - name: Restore AzureUser.Api.Contract.csproj
+      run: dotnet restore ./src/*/*/AzureUser.Api.Contract.csproj
 
-    - name: Build AzureUser.Get.Api.csproj
-      run: dotnet build ./src/*/*/AzureUser.Get.Api.csproj --no-restore  -c Release
+    - name: Build AzureUser.Api.Contract.csproj
+      run: dotnet build ./src/*/*/AzureUser.Api.Contract.csproj --no-restore  -c Release
 
-    - name: Pack AzureUser.Get.Api.csproj
-      run: dotnet pack ./src/*/*/AzureUser.Get.Api.csproj --no-restore -o ~/nuget  -c Release
+    - name: Pack AzureUser.Api.Contract.csproj
+      run: dotnet pack ./src/*/*/AzureUser.Api.Contract.csproj --no-restore -o ~/nuget  -c Release
 
-    # Geolocation.Get.InOut.csproj
+    # AzureUser.Api.csproj
 
-    - name: Restore Geolocation.Get.InOut.csproj
-      run: dotnet restore ./src/*/*/Geolocation.Get.InOut.csproj
+    - name: Restore AzureUser.Api.csproj
+      run: dotnet restore ./src/*/*/AzureUser.Api.csproj
 
-    - name: Build Geolocation.Get.InOut.csproj
-      run: dotnet build ./src/*/*/Geolocation.Get.InOut.csproj --no-restore  -c Release
+    - name: Build AzureUser.Api.csproj
+      run: dotnet build ./src/*/*/AzureUser.Api.csproj --no-restore  -c Release
 
-    - name: Pack Geolocation.Get.InOut.csproj
-      run: dotnet pack ./src/*/*/Geolocation.Get.InOut.csproj --no-restore -o ~/nuget  -c Release
+    - name: Pack AzureUser.Api.csproj
+      run: dotnet pack ./src/*/*/AzureUser.Api.csproj --no-restore -o ~/nuget  -c Release
 
-    # Geolocation.Get.Api.csproj
+    # Geolocation.Api.Contract.csproj
 
-    - name: Restore Geolocation.Get.Api.csproj
-      run: dotnet restore ./src/*/*/Geolocation.Get.Api.csproj
+    - name: Restore Geolocation.Api.Contract.csproj
+      run: dotnet restore ./src/*/*/Geolocation.Api.Contract.csproj
 
-    - name: Build Geolocation.Get.Api.csproj
-      run: dotnet build ./src/*/*/Geolocation.Get.Api.csproj --no-restore  -c Release
+    - name: Build Geolocation.Api.Contract.csproj
+      run: dotnet build ./src/*/*/Geolocation.Api.Contract.csproj --no-restore  -c Release
 
-    - name: Pack Geolocation.Get.Api.csproj
-      run: dotnet pack ./src/*/*/Geolocation.Get.Api.csproj --no-restore -o ~/nuget  -c Release
+    - name: Pack Geolocation.Api.Contract.csproj
+      run: dotnet pack ./src/*/*/Geolocation.Api.Contract.csproj --no-restore -o ~/nuget  -c Release
 
-    # Geolocation.Get.Tests
+    # Geolocation.Api.csproj
 
-    - name: Restore Geolocation.Get.Tests
-      run: dotnet restore ./src/*/*/Geolocation.Get.Tests.csproj
+    - name: Restore Geolocation.Api.csproj
+      run: dotnet restore ./src/*/*/Geolocation.Api.csproj
 
-    - name: Test Geolocation.Get.Tests
-      run: dotnet test ./src/*/*/Geolocation.Get.Tests.csproj --no-restore  -c Release
+    - name: Build Geolocation.Api.csproj
+      run: dotnet build ./src/*/*/Geolocation.Api.csproj --no-restore  -c Release
+
+    - name: Pack Geolocation.Api.csproj
+      run: dotnet pack ./src/*/*/Geolocation.Api.csproj --no-restore -o ~/nuget  -c Release
+
+    # Geolocation.Api.Test
+
+    - name: Restore Geolocation.Api.Test
+      run: dotnet restore ./src/*/*/Geolocation.Api.Test.csproj
+
+    - name: Test Geolocation.Api.Test
+      run: dotnet test ./src/*/*/Geolocation.Api.Test.csproj --no-restore  -c Release
 
     # Push
 
