@@ -29,16 +29,16 @@ jobs:
         -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
         --store-password-in-clear-text
 
-    # AzureUser.Api.Contract.UserGet.csproj
+    # AzureUser.Api.Contract.User.Get.csproj
 
-    - name: Restore AzureUser.Api.Contract.UserGet.csproj
-      run: dotnet restore ./src/*/*/AzureUser.Api.Contract.UserGet.csproj
+    - name: Restore AzureUser.Api.Contract.User.Get.csproj
+      run: dotnet restore ./src/*/*/AzureUser.Api.Contract.User.Get.csproj
 
-    - name: Build AzureUser.Api.Contract.UserGet.csproj
-      run: dotnet build ./src/*/*/AzureUser.Api.Contract.UserGet.csproj --no-restore  -c Release
+    - name: Build AzureUser.Api.Contract.User.Get.csproj
+      run: dotnet build ./src/*/*/AzureUser.Api.Contract.User.Get.csproj --no-restore  -c Release
 
-    - name: Pack AzureUser.Api.Contract.UserGet.csproj
-      run: dotnet pack ./src/*/*/AzureUser.Api.Contract.UserGet.csproj --no-restore -o ~/nuget  -c Release
+    - name: Pack AzureUser.Api.Contract.User.Get.csproj
+      run: dotnet pack ./src/*/*/AzureUser.Api.Contract.User.Get.csproj --no-restore -o ~/nuget  -c Release
 
     # AzureUser.Api.Contract.csproj
 
